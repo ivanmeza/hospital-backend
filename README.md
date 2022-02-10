@@ -1,4 +1,4 @@
-# AdminPro - Backedn
+# AdminPro - Backend
 
 ```
 npm install

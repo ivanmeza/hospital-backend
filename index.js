@@ -1,24 +1,35 @@
-const express = require('express');//importo express
 require('dotenv').config();//importo mi archivo env o variables de entorno
-var cors = require('cors');//importo mis cors
+const express = require('express');//importo express
+const cors = require('cors');//importo mis cors
+
 const {dbConnection} = require('./Database/config');// importo mi conexion a mongo que esta en Database
-const app = express();//creo un objeto de express
+
+const app = express();//creo el servidor de express
 
 //configuracion de cors
 app.use(cors());
+
+//lectura y parseo del body recibo del pastman o front 
+app.use(express.json());
+
+
 //base de datos 
 dbConnection();//ejecuto mi conexion a mongo
 
-console.log(process.env.PORT);//trae el dato del puerto donde esta corriendo el servidor
 
-//rutas
-app.get('/',(req,res)=>{
-    res.json({
-        ok:true,
-        msg: 'hola mundo'
-    });
+//rutas                 //controlador
+app.use('/api/usuarios',require('./routes/usuarios'));//concateno toda la ruta desde el controlador
+app.use('/api/login',require('./routes/auth'));
+
+//mediante las variables de entonro process.env
+app.listen(process.env.PORT,()=>{
+    console.log('corriendo el servidor' + ' ' + process.env.PORT);
 });
 
-app.listen(process.env.PORT,()=>{//mediante el objeto ejecuto el servidor
-    console.log('corriendo el servidor' + ' ' + process.env.PORT);
-})
+
+
+
+
+
+
+
