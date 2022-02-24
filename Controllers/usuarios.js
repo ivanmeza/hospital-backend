@@ -7,10 +7,22 @@ const bcrypt = require('bcryptjs');//libreria para encriptar contraseñas
 const res = require('express/lib/response');
 // //aqui va la logica o lo que regreso de la bd
 const getUsuarios = async (req,res)=>{//funcion requirimiento al servidor y respuesta  que regresa datos
-    const usuarios = await  Usuario.find({}, 'nombre email role google');//obtengo de mi bd el nombre,email,role y google
+
+    const desde = Number(req.query.desde) || 0;//obtengo desde el postman req la variable desde 
+
+    const [usuarios,total] = await Promise.all([
+
+        //se guarda en la primera posicion del arreglo
+        Usuario
+            .find({}, 'nombre email role google img')//obtengo de mi bd el nombre,email,role y google
+            .skip(desde)//busco desde la variable de postman
+            .limit(5),//un limite de 5 registros
+        Usuario.countDocuments()   //se guarda en la segunda posicion de mi arreglo      
+    ]);
     res.json({
         ok:true,
         usuarios,//imprimo la respuesta 
+        total,
         uid: req.uid
     });
 }

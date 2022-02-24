@@ -1,5 +1,5 @@
 
-const jwt = require('jsonwebtoken');//importo mi jwt
+const jwt = require('jsonwebtoken');//importo mi jwt para el token
 const validarJWT = (req, res, next)=>{
 
     //leer el token de los headers postman

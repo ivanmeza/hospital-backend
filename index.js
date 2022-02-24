@@ -18,8 +18,12 @@ dbConnection();//ejecuto mi conexion a mongo
 
 
 //rutas                 //controlador
-app.use('/api/usuarios',require('./routes/usuarios'));//concateno toda la ruta desde el controlador
+app.use('/api/usuarios',require('./routes/usuarios'));//concatamos toda la ruta desde el controlador
+app.use('/api/hospitales',require('./routes/hospitales'));//concateno toda la ruta desde el controlador
+app.use('/api/medicos',require('./routes/medicos'));//concateno toda la ruta desde el controlador
+app.use('/api/todo',require('./routes/busquedas'));//creo la ruta concatenando el controlador
 app.use('/api/login',require('./routes/auth'));
+app.use('/api/upload',require('./routes/uploads'));
 
 //mediante las variables de entonro process.env
 app.listen(process.env.PORT,()=>{
